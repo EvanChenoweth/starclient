@@ -12,9 +12,9 @@ import SignUp from './components/auth/SignUp'
 import SignIn from './components/auth/SignIn'
 import SignOut from './components/auth/SignOut'
 import ChangePassword from './components/auth/ChangePassword'
-import PetCreate from './components/pets/PetCreate'
-import PetIndex from './components/pets/PetIndex'
-import PetShow from './components/pets/PetShow'
+import StarCreate from './components/stars/StarCreate'
+import StarIndex from './components/stars/StarIndex'
+import StarShow from './components/stars/StarShow'
 
 const App = () => {
 
@@ -75,20 +75,20 @@ const App = () => {
             path='/create'
             element={
               <RequireAuth user={user}>
-                <PetCreate msgAlert={msgAlert} user={user} />
+                <StarCreate msgAlert={msgAlert} user={user} />
               </RequireAuth>}
           />
 		  <Route
-            path='/pets/:id'
+            path='/stars/:id'
             element={
-                <PetShow msgAlert={msgAlert} user={user} />
+                <StarShow msgAlert={msgAlert} user={user} />
             }
           />
 		    <Route
-            path='/pets'
+            path='/stars'
             element={
               <RequireAuth user={user}>
-                <PetIndex msgAlert={msgAlert} user={user} />
+                <StarIndex msgAlert={msgAlert} user={user} />
               </RequireAuth>}
           />
 

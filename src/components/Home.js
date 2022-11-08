@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import PetIndex from "./pets/PetIndex"
+import PetIndex from "./stars/StarIndex"
 import images from './shared/images'
 
 const Home = (props) => {
@@ -9,7 +9,7 @@ const Home = (props) => {
 		<div className='container-md'>
 			<img src={`${images.cat}`}/>
 			<img src={`${images.dog}`}/>
-			<h2>All the pets</h2>
+			<h2>All the stars</h2>
 			<PetIndex msgAlert={msgAlert}/>
 		</div>
 	)

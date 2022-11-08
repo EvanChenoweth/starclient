@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PetUpdate = ({ pet, handleChange, handleUpdatePet }) => {
+const StarUpdate = ({ pet, handleChange, handleUpdatePet }) => {
 	return (
 		<>
 			<input 
@@ -20,4 +20,4 @@ const PetUpdate = ({ pet, handleChange, handleUpdatePet }) => {
 	)
 }
 
-export default PetUpdate
+export default StarUpdate

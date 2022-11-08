@@ -1,20 +1,16 @@
-import React, { useState } from 'react' 
-import { petCreate } from '../../api/pet'
-import { useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Modal } from 'react-bootstrap'
+import StarForm from '../shared/StarForm'
+import { starUpdate } from '../../api/star'
+import messages from '../shared/AutoDismissAlert/messages'
 
-import PetForm from '../shared/PetForm'
+const EditStarModal = (props) => {
+    const { 
+        user, show, handleClose, 
+        msgAlert, triggerRefresh 
+    } = props
 
-const PetCreate = ({ user, msgAlert }) => {
-    const navigate = useNavigate()
-
-    const defaultPet = {
-        name: '',
-        type: '',
-        age: '',
-        adoptable: false
-    }
-
-    const [pet, setPet] = useState(defaultPet)
+    const [star, setStar] = useState(props.star)
 
     const handleChange = (e) => {
         // to keep the values as users input info 
@@ -23,7 +19,7 @@ const PetCreate = ({ user, msgAlert }) => {
         // this was fine for the old way of building a pet
         // need new stuff to handle new data types number and boolean
         // setPet({...pet, [event.target.name]: event.target.value})
-        setPet(prevPet => {
+        setStar(prevStar => {
             const updatedName = e.target.name
             let updatedValue = e.target.value
             // this handles our number type
@@ -39,41 +35,47 @@ const PetCreate = ({ user, msgAlert }) => {
                 updatedValue = false
             }
 
-            const updatedPet = { [updatedName]: updatedValue }
+            const updatedStar = { [updatedName]: updatedValue }
 
-            return { ...prevPet, ...updatedPet }
+            return { ...prevStar, ...updatedStar }
         })
     }
 
-    const handleCreatePet = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         
-        petCreate(pet, user)
-            .then(res => { navigate(`/pets/${res.data.pet.id}`)})
+        starUpdate(star, user, props.star._id)
+            .then(() => handleClose())
             .then(() => {
                 msgAlert({
                     heading: 'Success',
-                    message: 'Create Pet',
+                    message: messages.updatePetSuccess,
                     variant: 'success'
                 })
             })
+            .then(() => triggerRefresh())
             .catch((error) => {
                 msgAlert({
                     heading: 'Failure',
-                    message: 'Create Pet Failure' + error,
+                    message: messages.updatePetFailure + error,
                     variant: 'danger'
                 })
             })
     }
 
     return (
-        <PetForm
-            pet={ pet }
-            handleChange={ handleChange }
-            heading="Add a new pet!"
-            handleSubmit={ handleCreatePet }
-        />
-	)
+        <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton/>
+            <Modal.Body>
+                <StarForm 
+                    star={star}
+                    handleChange={handleChange}
+                    handleSubmit={handleSubmit}
+                    heading="Update Star"
+                />
+            </Modal.Body>
+        </Modal>
+    )
 }
 
-export default PetCreate
+export default EditStarModal

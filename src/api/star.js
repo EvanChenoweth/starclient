@@ -1,12 +1,12 @@
 import apiUrl from '../apiConfig'
 import axios from 'axios'
 
-export const petCreate = (data, user) => {
+export const starCreate = (data, user) => {
 	return axios({
 		method: 'POST',
-		url: apiUrl + '/pets',
+		url: apiUrl + '/stars',
 		data: {
-			pet: data,
+			star: data,
 		},
 		headers: {
 			Authorization: `Token token=${user.token}`,
@@ -14,26 +14,26 @@ export const petCreate = (data, user) => {
 	})
 }
 
-export const petIndex = (user) => {
+export const starIndex = (user) => {
 	return axios({
 		method: 'GET',
-		url: apiUrl + '/pets'
+		url: apiUrl + '/stars'
 	})
 }
 
-export const petShow = (user, id) => {
+export const starShow = (user, id) => {
 	return axios({
 		method: 'GET',
-		url: apiUrl + '/pets/' + id
+		url: apiUrl + '/stars/' + id
 	})
 }
 
-export const petUpdate = (data, user, id) => {
+export const starUpdate = (data, user, id) => {
 	return axios({
 		method: 'PATCH',
-		url: apiUrl + '/pets/' + id,
+		url: apiUrl + '/stars/' + id,
 		data: {
-			pet: data,
+			star: data,
 		},
 		headers: {
 			Authorization: `Token token=${user.token}`,
@@ -41,10 +41,10 @@ export const petUpdate = (data, user, id) => {
 	})
 }
 
-export const petDelete = (user, id) => {
+export const starDelete = (user, id) => {
 	return axios({
 		method: 'DELETE',
-		url: apiUrl + '/pets/' + id,
+		url: apiUrl + '/stars/' + id,
 		headers: {
 			Authorization: `Token token=${user.token}`,
 		},

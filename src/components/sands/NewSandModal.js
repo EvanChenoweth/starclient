@@ -1,31 +1,31 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import ToyForm from '../shared/ToyForm'
-import { createToy } from '../../api/toys'
+import SandForm from '../shared/SandForm'
+import { createSand } from '../../api/sand'
 
-const NewToyModal = (props) => {
+const NewSandModal = (props) => {
     const { 
-        user, pet, show, handleClose, msgAlert, triggerRefresh
+        user, star, show, handleClose, msgAlert, triggerRefresh
     } = props
 
-    const [toy, setToy] = useState({})
+    const [sand, setSand] = useState({})
 
     const handleChange = (e) => {
-        setToy(prevToy => {
+        setSand(prevSand => {
             const name = e.target.name
             let value = e.target.value
 
             // handle the checkbox
-            if (name === "isSqueaky" && e.target.checked) {
+            if (name === "isSoft" && e.target.checked) {
                 value = true
-            } else if (name === "isSqueaky" && !e.target.checked) {
+            } else if (name === "isSoft" && !e.target.checked) {
                 value = false
             }
 
-            const updatedToy = { [name]: value }
+            const updatedSand = { [name]: value }
 
             return {
-                ...prevToy, ...updatedToy
+                ...prevSand, ...updatedSand
             }
         })
     }
@@ -33,7 +33,7 @@ const NewToyModal = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        createToy(user, pet._id, toy)
+        createSand(user, star._id, sand)
             .then(() => handleClose())
             .then(() => {
                 msgAlert({
@@ -56,8 +56,8 @@ const NewToyModal = (props) => {
         <Modal show={ show } onHide={ handleClose }>
             <Modal.Header closeButton />
             <Modal.Body>
-                <ToyForm 
-                    toy={toy}
+                <SandForm 
+                    sand={sand}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
                     heading="Give this pet a toy!"
@@ -67,4 +67,4 @@ const NewToyModal = (props) => {
     )
 }
 
-export default NewToyModal
+export default NewSandModal

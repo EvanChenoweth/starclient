@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { Card, Button } from 'react-bootstrap'
-import { deleteToy } from '../../api/toys'
-import EditToyModal from './EditToyModal'
+import { deleteSand } from '../../api/sand'
+import EditSandModal from './EditSandModal'
+import NewSandModal from './NewSandModal'
 
-const ShowToy = (props) => {
-    const { toy, pet, user, msgAlert, triggerRefresh } = props
+const ShowSand = (props) => {
+    const { sand, star, user, msgAlert, triggerRefresh } = props
     console.log('this is the props', props)
 
     const [editModalShow, setEditModalShow] = useState(false)
@@ -21,8 +22,8 @@ const ShowToy = (props) => {
     }
 
     // this function removes a toy, is only available to pet owner
-    const destroyToy = () => {
-        deleteToy(user, pet._id, toy._id)
+    const destroySand = () => {
+        deleteSand(user, star._id, sand._id)
             .then(() => {
                 msgAlert({
                     heading: 'Toy deleted!',
@@ -42,18 +43,18 @@ const ShowToy = (props) => {
 
     return (
         <>
-            <Card className="m-2" style={setBgCondition(toy.condition)}>
-                <Card.Header>{ toy.name }</Card.Header>
+            <Card className="m-2" style={setBgCondition(sand.condition)}>
+                <Card.Header>{ sand.name }</Card.Header>
                 <Card.Body>
-                    <small>{ toy.description }</small><br/>
+                    <small>{ sand.description }</small><br/>
                     <small>
-                        { toy.isSqueaky ? 'squeak squeak' : 'stoic silence'}
+                        { sand.isSoft ? 'squeak squeak' : 'stoic silence'}
                     </small><br/>
-                    <small>Condition: { toy.condition }</small>
+                    <small>Condition: { sand.condition }</small>
                 </Card.Body>
                 <Card.Footer>
                     { 
-                        user && pet.owner && user._id === pet.owner._id 
+                        user && star.owner && user._id === star.owner._id 
                         ?
                         <>
                             <Button
@@ -61,14 +62,14 @@ const ShowToy = (props) => {
                                 variant="warning"
                                 onClick={() => setEditModalShow(true)}  
                             >
-                                Edit Toy
+                                Edit Sand
                             </Button>
                             <Button 
                                 className="m-2"
                                 variant="danger"
-                                onClick={() => destroyToy()}
+                                onClick={() => destroySand()}
                             >
-                                Delete Toy
+                                Delete Sand
                             </Button>
                         </>
                         :
@@ -76,10 +77,10 @@ const ShowToy = (props) => {
                     }
                 </Card.Footer>
             </Card>
-            <EditToyModal 
+            <EditSandModal 
                 user={user}
-                pet={pet}
-                toy={toy}
+                star={star}
+                sand={sand}
                 msgAlert={msgAlert}
                 triggerRefresh={triggerRefresh}
                 show={editModalShow}
@@ -89,4 +90,4 @@ const ShowToy = (props) => {
     )
 }
 
-export default ShowToy
+export default ShowSand

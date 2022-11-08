@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
-import { Modal } from 'react-bootstrap'
-import PetForm from '../shared/PetForm'
-import { petUpdate } from '../../api/pet'
-import messages from '../shared/AutoDismissAlert/messages'
+import React, { useState } from 'react' 
+import { starCreate } from '../../api/star'
+import { useNavigate } from 'react-router-dom'
 
-const EditPetModal = (props) => {
-    const { 
-        user, show, handleClose, 
-        msgAlert, triggerRefresh 
-    } = props
+import StarForm from '../shared/StarForm'
 
-    const [pet, setPet] = useState(props.pet)
+const StarCreate = ({ user, msgAlert }) => {
+    const navigate = useNavigate()
+
+    const defaultStar = {
+        name: '',
+        type: '',
+        age: '',
+        adoptable: false
+    }
+
+    const [star, setStar] = useState(defaultStar)
 
     const handleChange = (e) => {
         // to keep the values as users input info 
@@ -19,7 +23,7 @@ const EditPetModal = (props) => {
         // this was fine for the old way of building a pet
         // need new stuff to handle new data types number and boolean
         // setPet({...pet, [event.target.name]: event.target.value})
-        setPet(prevPet => {
+        setStar(prevStar => {
             const updatedName = e.target.name
             let updatedValue = e.target.value
             // this handles our number type
@@ -35,47 +39,41 @@ const EditPetModal = (props) => {
                 updatedValue = false
             }
 
-            const updatedPet = { [updatedName]: updatedValue }
+            const updatedStar = { [updatedName]: updatedValue }
 
-            return { ...prevPet, ...updatedPet }
+            return { ...prevStar, ...updatedStar }
         })
     }
 
-    const handleSubmit = (e) => {
+    const handleCreateStar = (e) => {
         e.preventDefault()
         
-        petUpdate(pet, user, props.pet._id)
-            .then(() => handleClose())
+        starCreate(star, user)
+            .then(res => { navigate(`/stars/${res.data.star.id}`)})
             .then(() => {
                 msgAlert({
                     heading: 'Success',
-                    message: messages.updatePetSuccess,
+                    message: 'Create Star',
                     variant: 'success'
                 })
             })
-            .then(() => triggerRefresh())
             .catch((error) => {
                 msgAlert({
                     heading: 'Failure',
-                    message: messages.updatePetFailure + error,
+                    message: 'Create Star Failure' + error,
                     variant: 'danger'
                 })
             })
     }
 
     return (
-        <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton/>
-            <Modal.Body>
-                <PetForm 
-                    pet={pet}
-                    handleChange={handleChange}
-                    handleSubmit={handleSubmit}
-                    heading="Update Pet"
-                />
-            </Modal.Body>
-        </Modal>
-    )
+        <StarForm
+            star={ star }
+            handleChange={ handleChange }
+            heading="Add a new star!"
+            handleSubmit={ handleCreateStar }
+        />
+	)
 }
 
-export default EditPetModal
+export default StarCreate

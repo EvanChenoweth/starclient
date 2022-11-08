@@ -20,12 +20,12 @@ const authenticatedOptions = (
 		</Nav.Item>
 		<Nav.Item className='m-2'>
 			<Link to='create' style={linkStyle}>
-				Create a Pet
+				Create a Star
 			</Link>
 		</Nav.Item>
 		<Nav.Item className='m-2'>
 			<Link to='pets' style={linkStyle}>
-				Index all pets
+				Index all stars
 			</Link>
 		</Nav.Item>
 	</>
@@ -56,7 +56,7 @@ const Header = ({ user }) => (
 	<Navbar bg='primary' variant='dark' expand='md'>
 		<Navbar.Brand className='m-2'>
             <Link to='/' style={linkStyle}>
-                Monster Pets
+                Stars App
             </Link>
         </Navbar.Brand>
 		<Navbar.Toggle aria-controls='basic-navbar-nav' />

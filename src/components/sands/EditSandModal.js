@@ -1,34 +1,34 @@
 import React, { useState } from 'react'
 import { Modal } from 'react-bootstrap'
-import ToyForm from '../shared/ToyForm'
-import { updateToy } from '../../api/toys'
+import SandForm from '../shared/SandForm'
+import { updateSand } from '../../api/sand'
 import messages from '../shared/AutoDismissAlert/messages'
 
 
-const EditToyModal = (props) => {
+const EditSandModal = (props) => {
     const { 
         user, show, handleClose, 
-        msgAlert, triggerRefresh, pet 
+        msgAlert, triggerRefresh, star 
     } = props
 
-    const [toy, setToy] = useState(props.toy)
+    const [sand, setSand] = useState(props.sand)
 
     const handleChange = (e) => {
-        setToy(prevToy => {
+        setSand(prevSand => {
             const name = e.target.name
             let value = e.target.value
 
             // handle the checkbox
-            if (name === "isSqueaky" && e.target.checked) {
+            if (name === "isSoft" && e.target.checked) {
                 value = true
-            } else if (name === "isSqueaky" && !e.target.checked) {
+            } else if (name === "isSoft" && !e.target.checked) {
                 value = false
             }
 
-            const updatedToy = { [name]: value }
+            const updatedSand = { [name]: value }
 
             return {
-                ...prevToy, ...updatedToy
+                ...prevSand, ...updatedSand
             }
         })
     }
@@ -36,7 +36,7 @@ const EditToyModal = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         
-        updateToy(user, pet._id, toy)
+        updateSand(user, star._id, sand)
             .then(() => handleClose())
             .then(() => {
                 msgAlert({
@@ -59,15 +59,15 @@ const EditToyModal = (props) => {
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton/>
             <Modal.Body>
-                <ToyForm 
-                    toy={toy}
+                <SandForm 
+                    sand={sand}
                     handleChange={handleChange}
                     handleSubmit={handleSubmit}
-                    heading="Give this pet a toy!"
+                    heading="Give this star a sand!"
                 />
             </Modal.Body>
         </Modal>
     )
 }
 
-export default EditToyModal
+export default EditSandModal

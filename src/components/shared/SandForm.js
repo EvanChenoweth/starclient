@@ -1,8 +1,8 @@
 import React from 'react'
 import { Form, Container, Button } from 'react-bootstrap'
 
-const ToyForm = (props) => {
-    const {toy, handleChange, handleSubmit, heading} = props
+const SandForm = (props) => {
+    const {sand, handleChange, handleSubmit, heading} = props
 
     return (
         <Container className="justify-content-center">
@@ -10,36 +10,36 @@ const ToyForm = (props) => {
             <Form onSubmit={ handleSubmit }>
                 <Form.Label>Name:</Form.Label>
                 <Form.Control 
-                    placeholder="what's the toy's name?"
+                    placeholder="what's the sand name?"
                     name="name"
                     id="name"
-                    value= { toy.name }
+                    value= { sand.name }
                     onChange={ handleChange }
                 />
                 <Form.Label>Description:</Form.Label>
                 <Form.Control 
-                    placeholder="describe the toy..."
+                    placeholder="describe the sand..."
                     name="description"
                     id="description"
-                    value= { toy.description }
+                    value= { sand.description }
                     onChange={ handleChange }
                 />
                 <Form.Check 
-                    label="Is the toy squeaky?"
+                    label="Is the sand solid?"
                     name="isSqueaky"
-                    defaultChecked={ toy.isSqueaky }
+                    defaultChecked={ sand.isSoft }
                     onChange={ handleChange }
                 />
                 <Form.Select
-                    aria-label="toy condition"
+                    aria-label="sand condition"
                     name="condition"
-                    defaultValue={toy.condition}
+                    defaultValue={sand.condition}
                     onChange={handleChange}
                 >
                     <option>Open this select menu</option>
-                    <option value="new">new</option>
-                    <option value="used">used</option>
-                    <option value="disgusting">disgusting</option>
+                    <option value="new">flat</option>
+                    <option value="used">destroyed</option>
+                    <option value="disgusting">mix</option>
                 </Form.Select>
                 <Button type="submit">Submit</Button>
             </Form>
@@ -47,4 +47,4 @@ const ToyForm = (props) => {
     )
 }
 
-export default ToyForm
+export default SandForm

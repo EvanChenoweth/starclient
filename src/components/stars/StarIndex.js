@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react' 
 import { Card } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { petIndex } from '../../api/pet'
+import { starIndex } from '../../api/star'
 import LoadingScreen from '../shared/LoadingScreen'
 
 const cardContainerLayout = {
@@ -10,14 +10,14 @@ const cardContainerLayout = {
     justifyContent: 'center'
 }
 
-const PetIndex = ({ user, msgAlert }) => {
+const StarIndex = ({ user, msgAlert }) => {
 
-    const [allPets, setAllPets] = useState([])
+    const [allStars, setAllStars] = useState([])
 
     useEffect(() => {
-        petIndex(user)
+        starIndex(user)
         .then(res => {
-            setAllPets(res.data.pets)
+            setAllStars(res.data.stars)
         })
         .catch((error) => {
             msgAlert({
@@ -28,26 +28,26 @@ const PetIndex = ({ user, msgAlert }) => {
         })
     }, [])
 
-    const petCards = allPets.map(pet => (
-        <Card key={ pet.id } style={{ width: '30%', margin: 5 }}>
-            <Card.Header>{ pet.fullTitle }</Card.Header>
+    const starCards = allStars.map(star => (
+        <Card key={ star.id } style={{ width: '30%', margin: 5 }}>
+            <Card.Header>{ star.fullTitle }</Card.Header>
             <Card.Body>
                 <Card.Text>
-                    <Link to={ `/pets/${pet.id}` }>View { pet.name }</Link>
+                    <Link to={ `/stars/${star.id}` }>View { star.name }</Link>
                 </Card.Text>
             </Card.Body>
         </Card>
     ))
 
-    if (!allPets) {
+    if (!allStars) {
         return <LoadingScreen />
     }
 
     return (
         <div className='container-md' style={ cardContainerLayout }>
-            { petCards }
+            { starCards }
         </div>
     )
 }
 
-export default PetIndex
+export default StarIndex

@@ -1,8 +1,8 @@
 import { Form, Button, Container } from 'react-bootstrap'
 
-const PetForm = (props) => {
+const StarForm = (props) => {
     // here are the props we're going to bring into our form
-    const { pet, handleChange, heading, handleSubmit } = props
+    const { star, handleChange, heading, handleSubmit } = props
 
     return (
         <Container className="justify-content-center">
@@ -10,33 +10,33 @@ const PetForm = (props) => {
             <Form onSubmit={ handleSubmit }>
                 <Form.Label>Name:</Form.Label>
                 <Form.Control 
-                    placeholder="what's your pet's name?"
+                    placeholder="what's your star's name?"
                     name="name"
                     id="name"
-                    value= { pet.name }
+                    value= { star.name }
                     onChange={ handleChange }
                 />
                 <Form.Label>Type:</Form.Label>
                 <Form.Control 
-                    placeholder="what's type of pet?"
+                    placeholder="what's type of star?"
                     name="type"
                     id="type"
-                    value= { pet.type }
+                    value= { star.type }
                     onChange={ handleChange }
                 />
                 <Form.Label>Age:</Form.Label>
                 <Form.Control 
-                    placeholder="How old is your pet?"
+                    placeholder="How old is your star?"
                     type="number"
                     name="age"
                     id="age"
-                    value= { pet.age }
+                    value= { star.age }
                     onChange={ handleChange }
                 />
                 <Form.Check 
-                    label="Is this pet adoptable?"
+                    label="Is this star adoptable?"
                     name="adoptable"
-                    defaultChecked={ pet.adoptable }
+                    defaultChecked={ star.adoptable }
                     onChange={ handleChange }
                 />
                 <Button type="submit">Submit</Button>
@@ -45,4 +45,4 @@ const PetForm = (props) => {
     )
 }
 
-export default PetForm
+export default StarForm

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react' 
 import { useParams, useNavigate } from 'react-router-dom'
 import { Container, Card, Button } from 'react-bootstrap'
-import { petDelete, petShow } from '../../api/pet'
+import { starDelete, starShow } from '../../api/star'
 // import PetUpdate from './PetUpdate' <--no longer using in lieu of the modal
-import EditPetModal from './EditPetModal'
-import NewToyModal from '../toys/NewToyModal'
-import ShowToy from '../toys/ShowToy'
+import EditStarModal from './EditStarModal'
+import NewSandModal from '../sands/NewSandModal'
+import ShowSand from '../sands/ShowSand'
 import LoadingScreen from '../shared/LoadingScreen'
-import { updatePetSuccess, updatePetFailure } from '../shared/AutoDismissAlert/messages'
+import { updateStarSuccess, updateStarFailure } from '../shared/AutoDismissAlert/messages'
 import images from '../shared/images'
 
 const cardContainerLayout = {
@@ -16,12 +16,12 @@ const cardContainerLayout = {
     justifyContent: 'center'
 }
 
-const PetShow = ({ user, msgAlert }) => {
+const StarShow = ({ user, msgAlert }) => {
 
-    const [pet, setPet] = useState(null)
+    const [star, setStar] = useState(null)
     // const [isUpdateShown, setIsUpdateShown] = useState(false)
     const [editModalShow, setEditModalShow] = useState(false)
-    const [toyModalShow, setToyModalShow] = useState(false)
+    const [sandModalShow, setSandModalShow] = useState(false)
     const [deleted, setDeleted] = useState(false)
     const [updated, setUpdated] = useState(false)
 
@@ -29,26 +29,26 @@ const PetShow = ({ user, msgAlert }) => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        petShow(user, id)
+        starShow(user, id)
             .then((res) => {
-                setPet(res.data.pet)
+                setStar(res.data.star)
             })
             .catch((error) => {
                 msgAlert({
                     heading: 'Failure',
-                    message: 'Show Pet Failure' + error,
+                    message: 'Show Star Failure' + error,
                     variant: 'danger'
                 })
             })
     }, [updated])
 
-    const handleDeletePet = () => {
-        petDelete(user, id)
+    const handleDeleteStar = () => {
+        starDelete(user, id)
         .then(() => {
             setDeleted(true)
             msgAlert({
                 heading: 'Success',
-                message: 'Deleting a Pet',
+                message: 'Deleting a Star',
                 variant: 'success'
             })
             
@@ -56,22 +56,22 @@ const PetShow = ({ user, msgAlert }) => {
         .catch((error) => {
             msgAlert({
                 heading: 'Failure',
-                message: 'Deleting a Pet Failure' + error,
+                message: 'Deleting a Star Failure' + error,
                 variant: 'danger'
             })
         })
     }
 
-    let toyCards
-    if (pet) {
-        if (pet.toys.length > 0) {
+    let starCards
+    if (star) {
+        if (star.sand.length > 0) {
             // map over the toys
             // produce one ShowToy component for each of them
-            toyCards = pet.toys.map(toy => (
-                <ShowToy 
-                    key={toy._id}
-                    toy={toy}
-                    pet={pet}
+            starCards = star.sand.map(sand => (
+                <ShowSand 
+                    key={sand._id}
+                    sand={sand}
+                    star={star}
                     user={user}
                     msgAlert={msgAlert}
                     triggerRefresh={() => setUpdated(prev => !prev)}
@@ -86,12 +86,12 @@ const PetShow = ({ user, msgAlert }) => {
     // only one side of this check needs to be truthy = true
 
     // oneliner
-    if (deleted) navigate('/pets')
+    if (deleted) navigate('/stars')
     // if (deleted) {
     //     navigate('/pets')
     // }
 
-    if (!pet) {
+    if (!star) {
         return <LoadingScreen />
     }
 
@@ -99,48 +99,48 @@ const PetShow = ({ user, msgAlert }) => {
         <>
 			<Container className="fluid">
                 <Card>
-                <Card.Header>{ pet.fullTitle }</Card.Header>
+                <Card.Header>{ star.fullTitle }</Card.Header>
                 <Card.Body>
                     { 
-                        pet.type === "dog" 
+                        star.type === "dog" 
                         ?
                         <Card.Img variant="top" src={`${images.dog}`}/>
                         :
                         null
                     }
                     { 
-                        pet.type === "cat" 
+                        star.type === "cat" 
                         ?
                         <Card.Img variant="top" src={`${images.cat}`}/>
                         :
                         null
                     }
                     <Card.Text>
-                        <small>Age: { pet.age }</small><br/>
-                        <small>Type: { pet.type }</small><br/>
+                        <small>Age: { star.age }</small><br/>
+                        <small>Type: { star.type }</small><br/>
                         <small>
-                            Adoptable?: { pet.adoptable ? 'yes' : 'no' }
+                            Adoptable?: { star.adoptable ? 'yes' : 'no' }
                         </small><br/>
                     </Card.Text>
                 </Card.Body>
                 <Card.Footer>
-                    <Button onClick={() => setToyModalShow(true)}
+                    <Button onClick={() => setSandModalShow(true)}
                         className="m-2" variant="info"
                     >
-                        Give {pet.name} a toy!
+                        Give {star.name} a sand!
                     </Button>
                     { 
-                        pet.owner && user && pet.owner._id === user._id 
+                        star.owner && user && star.owner._id === user._id 
                         ?
                         <>
                             <Button onClick={() => setEditModalShow(true)} className="m-2" variant="warning">
-                                Edit Pet
+                                Edit Star
                             </Button>
-                            <Button onClick={() => handleDeletePet()}
+                            <Button onClick={() => handleDeleteStar()}
                                 className="m-2"
                                 variant="danger"
                             >
-                                Set { pet.name } Free
+                                Set { star.name } Free
                             </Button>
                         </>
                         :
@@ -159,29 +159,29 @@ const PetShow = ({ user, msgAlert }) => {
                     )}
                     <button onClick={handleDeletePet} >Delete</button> */}
                 </Card>
-            <h3>All of {pet.name}'s toys:</h3>
+            <h3>All of {star.name}'s sands:</h3>
             </Container>
             <Container style={cardContainerLayout}>
-                { toyCards }
+                { starCards }
             </Container>
-            <EditPetModal 
+            <EditStarModal 
                 user={user}
-                pet={pet}
+                star={star}
                 show={editModalShow}
                 msgAlert={msgAlert}
                 triggerRefresh={() => setUpdated(prev => !prev)}
                 handleClose={() => setEditModalShow(false)}
             />
-            <NewToyModal 
+            <NewSandModal 
                 user={user}
-                pet={pet}
-                show={toyModalShow}
+                star={star}
+                show={sandModalShow}
                 msgAlert={msgAlert}
                 triggerRefresh={() => setUpdated(prev => !prev)}
-                handleClose={() => setToyModalShow(false)}
+                handleClose={() => setSandModalShow(false)}
             />
         </>
     )
 }
 
-export default PetShow
+export default StarShow
